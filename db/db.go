@@ -3,24 +3,12 @@ package db
 import (
 	"encoding/csv"
 	"os"
-	"time"
 )
 
 var (
 	reader  *csv.Reader
 	records [][]string
 )
-
-type Record struct {
-	PhishID          int
-	URL              string
-	PhishDetailURL   string
-	SubmissionTime   time.Time
-	Verified         bool
-	VerificationTime time.Time
-	Online           bool
-	Target           string
-}
 
 // load the offline database (csv file)
 func LoadDatabase(database string) error {
