@@ -22,17 +22,30 @@ type Record struct {
 	Target           string
 }
 
-func LoadDatabase(database string) {
-	db, _ := os.Open(database)
+// load the offline database (csv file)
+func LoadDatabase(database string) error {
+	db, err := os.Open(database)
+	if err != nil {
+		return err
+	}
+
 	reader = csv.NewReader(db)
-	records, _ = reader.ReadAll()
+
+	records, err = reader.ReadAll()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func CheckURL(url string) (present bool, record []string) {
+// check whether a url exists in the database
+func CheckURL(url string) (record []string) {
 	for _, record := range records {
 		if record[1] == url {
-			return true, record
+			return record
 		}
 	}
-	return false, nil
+
+	return nil
 }
